@@ -1,0 +1,10 @@
+*~
+*.o
+*#
+.#*
+*.parked
+*.bak
+.touch
+*.log
+core
+*.json
