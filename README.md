@@ -2,45 +2,54 @@
 
 
 
-Test assignment for a core applicate.
+Test assignment for a core team.
 
-The task is to write a program in D which can sort a list of numbers using via communication between tasks/threads.
+The task is to write a program in D which can sort a list of numbers using via tasks/threads intercommunication.
 
-The program should be implemented as command line only program and it should only use the D standard library (phobos and druntime) and it should be able to be compiled with the **dmd** or the **ldc** compiler.
+The program should be implemented as command line only program and it should only use the D standard library (phobos and druntime) and it should be able to be compiled with the **dmd** or the **ldc2** compiler.
 
-The program should be able to be executed in a flowing manner.
+The program should be able to be executed in the flowing manner.
 
 ```bash
 ./dsort input.json output.json -n 7
 ```
 
-The program should take 3 arguments an input and output json file and a parameter n which is the number of tasks care of the sorting.
+The program should take 3 arguments an input and output json file and a parameter n. 
 
-The main task M should start the n tasks (use the std.concurrency) and wait for the task to be ready (Using  concurrency send/read to synchronize the task).
+The main task M should start the n sorting tasks (use the std.concurrency) and wait for the task to be ready (Using  concurrency send/read to synchronize the task).
+
+Hint: Use an enum as a to signal (send/receive) between.
+
+```D
+enum Control {
+    STOP, // Send to a task to stop it
+    END   // Send from a task when the task ends
+}
+```
 
 All tasks must be connected as show in the figure the arrows shows the message connections between the tasks. 
 
 [Task commications figure](sort_tasks.svg)
 
-Hint: The functions locate and register (in std.concurrency) can be use to set the name of tasks and to locate the task id 'Tid'.
+Hint: The functions locate and register (in std.concurrency  [See](https://dlang.org/phobos/std_concurrency.html)) can be use to set the name of tasks and to locate the task id 'Tid'.
 
 Hint: When a task is spawned from the main task M. The task function can be called with a immutable parameter.
 
-When all n tasks has been started the M task should send the numbers in the list one by one to each tasks randomly.
+When all n tasks has been started from the M task should send the numbers from the list one by one to each tasks randomly.
 
 The sorting tasks are only allowed to communicate with previous task and the next tasks as show in with the arrows in the figure.
 
 The numbers in the list should be equally distributed between the sorting tasks. This means each sorting task should hold K or K+1 numbers.
 
-Hint: A sorting task could keep track of how many numbers there the previous task and the next task.
+Hint: A sorting task could keep track of how many numbers the previous task and the next task holds.
 
 When a tasks finished it should write a json file with numbers contained in the task the files should be called output_#.json where # is the task number.
 
-The sorted numbers hold by the task should be send back to the main task M when the sorted task ends.
+The sorted numbers which is hold by the task should be send back to the main task M when the sorting task ends.
 
-The main task should write output.json file with all the numbers in order.
+The main task should write all the collected number to the output.json file in order.
 
-Hint: If the main task M send a STOP signal to each sorting task from 0 to n-1 and between each STOP it wait for the results from the sorting task to send and END signal back, this makes it simple for the main task to collect the result from all sorting tasks in order.
+Hint: If the main task M send a STOP signal to each sorting task from 0 to n-1 and between each STOP it wait for the results from the sorting, this makes it simple for the main task to collect the result from all sorting tasks in order.
 
 **Example**
 
