@@ -24,6 +24,7 @@ Hint: Use an enum as a to signal (send/receive) between.
 enum Control {
     STOP, // Send to a task to stop it
     END   // Send from a task when the task ends
+        ...
 }
 ```
 
@@ -38,8 +39,6 @@ Hint: When a task is spawned from the main task M. The task function can be call
 When all n tasks has been started from the M task should send the numbers from the list one by one to each tasks randomly.
 
 The sorting tasks are only allowed to communicate with previous task and the next tasks as show in with the arrows in the figure.
-
-The numbers in the list should be equally distributed between the sorting tasks. This means each sorting task should hold K or K+1 numbers.
 
 Hint: A sorting task could keep track of how many numbers the previous task and the next task holds.
 
@@ -68,11 +67,11 @@ output.json
 ```
 output_0.json
 ```json
-[0, 2, 4]
+[0, 2]
 ```
 output_1.json
 ```json
-[4, 8, 14]
+[4, 4, 8, 14]
 ```
 output_2.json
 ```json
@@ -80,15 +79,15 @@ output_2.json
 ```
 output_3.json
 ```json
-[38, 51, 58]
+[23, 29, 38, 51, 58]
 ```
 output_4.json
 ```json
-[60, 60, 61]
+[60, 60, 61, 77]
 ```
 output_5.json
 ```json
-[77, 80, 83]
+[80, 83]
 ```
 output_6.json
 ```json
@@ -103,7 +102,19 @@ A D program can compile/linked like.
 
 ```bash
 dmd dsort.d
+# or
+ldc2 dsort.d
 ```
+
+To search for information about D, use the keyword  **dlang**.
+
+The dmd compiler can be found here [dmd][https://dlang.org/download.html]. and the **ldc2** can usually be install with. (**Ubuntu**)
+
+```bash
+sudo apt install ldc
+```
+
+
 
 
 
